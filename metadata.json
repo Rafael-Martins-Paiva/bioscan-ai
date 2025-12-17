@@ -1,0 +1,7 @@
+{
+  "name": "BioScan AI",
+  "description": "Analisador biométrico em tempo real que estima presença humana, idade e gênero usando a câmera.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
