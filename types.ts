@@ -1,10 +1,3 @@
-export enum AppState {
-  IDLE = "IDLE",
-    SCANNING = "SCANNING",
-    RESULT = "RESULT",
-    ERROR = "ERROR"
-}
-
 export interface AnalysisResult {
   isHuman: boolean;
   estimatedAge: string;
@@ -12,4 +5,10 @@ export interface AnalysisResult {
   confidence: number;
   notes: string;
   detectedFeatures: string[];
+}
+
+export enum AppState {
+  IDLE = 'IDLE',
+  SCANNING = 'SCANNING',
+  ERROR = 'ERROR'
 }
