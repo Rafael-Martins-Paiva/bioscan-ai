@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const [currentAnalysis, setCurrentAnalysis] = useState<AnalysisResult | null>(null);
 
   return (
-    <div className="w-full h-screen bg-black overflow-hidden relative">
+    <div <div className="w-full h-[100dvh] bg-black overflow-hidden relative">>
       <VideoFeed 
         onResultUpdate={setCurrentAnalysis} 
         appState={appState}
@@ -16,7 +16,7 @@ const App: React.FC = () => {
       />
       <HUD data={currentAnalysis} />
       
-      {/* Initial Landing Overlay (only shows very briefly before camera starts or on error) */}
+      {}
       {appState === AppState.IDLE && (
         <div className="absolute inset-0 flex items-center justify-center z-50 bg-black">
           <div className="text-center animate-pulse">

@@ -25,7 +25,6 @@ export const analyzeImageFrame = async (
   } catch (error) {
     console.error("Frontend analysis error:", error);
     
-    // fallback igual ao backend (consistência)
     return {
       isHuman: false,
       estimatedAge: "--",

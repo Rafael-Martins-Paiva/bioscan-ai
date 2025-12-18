@@ -13,7 +13,6 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [streamActive, setStreamActive] = useState(false);
   
-  // Start Camera
   useEffect(() => {
     const startCamera = async () => {
       try {
@@ -39,7 +38,6 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
     startCamera();
 
     return () => {
-      // Cleanup tracks
       if (videoRef.current && videoRef.current.srcObject) {
         const stream = videoRef.current.srcObject as MediaStream;
         stream.getTracks().forEach(track => track.stop());
@@ -47,7 +45,6 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
     };
   }, [setAppState]);
 
-  // Capture Frame and Analyze logic
   const captureAndAnalyze = useCallback(async () => {
     if (!videoRef.current || !canvasRef.current || appState !== AppState.SCANNING) return;
 
@@ -56,17 +53,13 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
     const context = canvas.getContext('2d');
 
     if (video.readyState === video.HAVE_ENOUGH_DATA && context) {
-      // Set canvas dimensions to match video
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      // Draw video frame to canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Convert to base64 (reduce quality for speed)
       const base64Image = canvas.toDataURL('image/jpeg', 0.6);
 
-      // Call API
       try {
         const result = await analyzeImageFrame(base64Image);
         onResultUpdate(result);
@@ -76,7 +69,6 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
     }
   }, [appState, onResultUpdate]);
 
-  // Interval for sampling (every 10 seconds)
   useEffect(() => {
     const intervalId = setInterval(captureAndAnalyze, 10000);
     return () => clearInterval(intervalId);
@@ -84,10 +76,10 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
 
   return (
     <div className="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
-      {/* Hidden Canvas for processing */}
+      {}
       <canvas ref={canvasRef} className="hidden" />
       
-      {/* Live Video */}
+      {}
       <video
         ref={videoRef}
         autoPlay
@@ -96,7 +88,7 @@ const VideoFeed: React.FC<VideoFeedProps> = ({ onResultUpdate, appState, setAppS
         className={`w-full h-full object-cover opacity-80 ${appState === AppState.SCANNING ? '' : 'blur-sm'}`}
       />
       
-      {/* Permission/Error Message */}
+      {}
       {appState === AppState.ERROR && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/90 z-50">
           <div className="text-red-500 text-center p-6 border border-red-500 rounded font-mono">

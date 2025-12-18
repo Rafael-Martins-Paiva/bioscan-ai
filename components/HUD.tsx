@@ -17,26 +17,22 @@ const playScanSound = () => {
     osc.connect(gain);
     gain.connect(ctx.destination);
 
-    // Efeito sonoro "chirp" de ficção científica (rápido e agudo)
     osc.type = 'sine';
     osc.frequency.setValueAtTime(1200, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.08);
     
-    // Volume baixo para ser sutil
     gain.gain.setValueAtTime(0.03, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
 
     osc.start();
     osc.stop(ctx.currentTime + 0.08);
   } catch (e) {
-    // Ignora erros de política de autoplay se o usuário não tiver interagido
   }
 };
 
 const HUD: React.FC<HUDProps> = ({ data }) => {
   const [pulse, setPulse] = useState(false);
 
-  // Trigger pulse effect and sound on data update
   useEffect(() => {
     if (data) {
       setPulse(true);
@@ -53,7 +49,7 @@ const HUD: React.FC<HUDProps> = ({ data }) => {
   return (
     <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-4 sm:p-8 z-10">
       
-      {/* Top Bar */}
+      {}
       <div className="flex justify-between items-start">
         <div className="border border-emerald-500/30 bg-black/60 backdrop-blur-sm p-3 rounded-br-2xl">
           <h1 className="text-emerald-500 font-mono text-xl tracking-widest font-bold">BIOSCAN.AI</h1>
@@ -68,22 +64,22 @@ const HUD: React.FC<HUDProps> = ({ data }) => {
         </div>
       </div>
 
-      {/* Center Reticle */}
+      {}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 border border-white/20 rounded-lg">
-        {/* Corners */}
+        {}
         <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-emerald-400"></div>
         <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-emerald-400"></div>
         <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-emerald-400"></div>
         <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-emerald-400"></div>
         
-        {/* Scan Line Animation */}
+        {}
         <div className="scan-line opacity-50"></div>
         
-        {/* Target Text */}
+        {}
         {!data && <div className="absolute top-1/2 w-full text-center text-emerald-500/50 font-mono text-sm animate-pulse">BUSCANDO ALVO...</div>}
       </div>
 
-      {/* Analysis Panel (Bottom) */}
+      {}
       <div className="flex justify-center sm:justify-end items-end">
         {data ? (
           <div className={`
@@ -142,7 +138,7 @@ const HUD: React.FC<HUDProps> = ({ data }) => {
         )}
       </div>
       
-      {/* CRT Effect Overlay */}
+      {}
       <div className="fixed inset-0 crt-overlay pointer-events-none z-50"></div>
     </div>
   );
