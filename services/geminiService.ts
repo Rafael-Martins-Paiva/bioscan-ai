@@ -1,6 +1,6 @@
 import { AnalysisResult } from "../types";
 
-const API_URL = "https://bioend.up.railway.app/api/analyze";
+const API_URL = "https://bioscan-backend.vercel.app/api/analyze";
 
 export const analyzeImageFrame = async (
   base64Image: string
