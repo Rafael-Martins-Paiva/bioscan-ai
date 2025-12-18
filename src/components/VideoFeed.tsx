@@ -3,17 +3,28 @@ import { AppState } from "../types";
 
 interface Props {
   onFrameCaptured: (base64: string) => void;
+  onCameraReady: () => void;
   appState: AppState;
 }
 
-export default function VideoFeed({ onFrameCaptured, appState }: Props) {
+export default function VideoFeed({
+  onFrameCaptured,
+  onCameraReady,
+  appState
+}: Props) {
   const videoRef = useRef < HTMLVideoElement > (null);
   const canvasRef = useRef < HTMLCanvasElement > (null);
   
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
       .then(stream => {
-        if (videoRef.current) videoRef.current.srcObject = stream;
+        if (!videoRef.current) return;
+        
+        videoRef.current.srcObject = stream;
+        
+        videoRef.current.onloadedmetadata = () => {
+          onCameraReady();
+        };
       })
       .catch(() => console.error("Camera error"));
     
@@ -21,11 +32,12 @@ export default function VideoFeed({ onFrameCaptured, appState }: Props) {
       const stream = videoRef.current?.srcObject as MediaStream;
       stream?.getTracks().forEach(t => t.stop());
     };
-  }, []);
+  }, [onCameraReady]);
   
   useEffect(() => {
     const id = setInterval(() => {
       if (appState !== AppState.SCANNING) return;
+      
       const video = videoRef.current;
       const canvas = canvasRef.current;
       if (!video || !canvas) return;
@@ -46,7 +58,13 @@ export default function VideoFeed({ onFrameCaptured, appState }: Props) {
   return (
     <>
       <canvas ref={canvasRef} className="hidden" />
-      <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        className="w-full h-full object-cover"
+      />
     </>
   );
 }

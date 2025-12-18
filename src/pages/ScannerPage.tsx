@@ -8,9 +8,10 @@ export default function ScannerPage() {
   return (
     <div className="relative w-screen h-screen bg-black overflow-hidden">
       <VideoFeed
-        appState={state}
-        onFrameCaptured={analyzeFrame}
-      />
+  appState={state}
+  onFrameCaptured={analyzeFrame}
+  onCameraReady={() => setState(AppState.SCANNING)}
+/>
       <HUD data={result} />
 
       {state === "IDLE" && (
