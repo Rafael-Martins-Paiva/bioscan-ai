@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const [currentAnalysis, setCurrentAnalysis] = useState<AnalysisResult | null>(null);
 
   return (
-    <div <div className="w-full h-[100dvh] bg-black overflow-hidden relative">>
+    <div className="w-full h-[100dvh] bg-black overflow-hidden relative">
       <VideoFeed 
         onResultUpdate={setCurrentAnalysis} 
         appState={appState}
