@@ -1,3 +1,7 @@
+import { useState, useRef, useCallback } from "react";
+import { AppState, AnalysisResult } from "@/types";
+import { analyzeImage } from "@/services/analysisService";
+
 export function useScanner() {
   const [result, setResult] = useState < AnalysisResult | null > (null);
   const [state, setState] = useState < AppState > (AppState.IDLE);
@@ -5,7 +9,7 @@ export function useScanner() {
   
   const analyzeFrame = useCallback(async (base64: string) => {
     const now = Date.now();
-    if (now - lastScan.current < 10000) return;
+    if (now - lastScan.current < 3000) return;
     lastScan.current = now;
     
     try {
@@ -13,10 +17,16 @@ export function useScanner() {
       const res = await analyzeImage(base64);
       setResult(res);
       setState(AppState.RESULT);
-    } catch {
+    } catch (err) {
+      console.error(err);
       setState(AppState.ERROR);
     }
   }, []);
   
-  return { analyzeFrame, result, state, setState };
+  return {
+    analyzeFrame,
+    result,
+    state,
+    setState
+  };
 }
