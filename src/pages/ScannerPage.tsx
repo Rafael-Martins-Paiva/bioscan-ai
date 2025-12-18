@@ -1,7 +1,9 @@
+import { useState, useRef, useCallback } from "react";
 import VideoFeed from "@/components/VideoFeed";
 import HUD from "@/components/hud/HUD";
 import { useScanner } from "@/hooks/useScanner";
-import { AppState } from "@/types";
+import { AppState, AnalysisResult } from "@/types";
+import { analyzeImage } from "@/services/analysisService";
 
 export default function ScannerPage() {
   const { analyzeFrame, result, state, setState } = useScanner();
