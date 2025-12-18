@@ -1,7 +1,3 @@
-import { useCallback, useRef, useState } from "react";
-import { AppState, AnalysisResult } from "../types";
-import { analyzeImage } from "../services/analysisService";
-
 export function useScanner() {
   const [result, setResult] = useState < AnalysisResult | null > (null);
   const [state, setState] = useState < AppState > (AppState.IDLE);
@@ -22,5 +18,5 @@ export function useScanner() {
     }
   }, []);
   
-  return { result, state, setState, analyzeFrame };
+  return { analyzeFrame, result, state, setState };
 }
